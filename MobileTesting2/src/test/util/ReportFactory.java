@@ -7,7 +7,9 @@ import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +23,7 @@ public class ReportFactory extends BasicTest{
 
     private synchronized static ExtentReports getExtentReport() {
         if (reporter == null) {
+            init();
             reporter = new ExtentReports("./test-output/ExtentReport_" +buildNumber+ ".html", true);
 
         }
@@ -79,20 +82,20 @@ public class ReportFactory extends BasicTest{
             reporter.endTest(test);
             reporter.flush();
             reporter.close();
-//            File currentReport = new File("./test-output/ExtentReport" + ".html");
-////            FileUtils.copyFile(currentReport, new File("./test-output/ExtentReport.html"));
+            File currentReport = new File("./test-output/ExtentReport" + ".html");
+            FileUtils.copyFile(currentReport, new File("./test-output/ExtentReport.html"));
         }
     }
 
-//    private static void init() {
-//        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("./test-output/ExtentReport_"+buildNumber + ".html");
-//        htmlReporter.config().setResourceCDN(ResourceCDN.EXTENTREPORTS); //解决报告没有css样式的问题
-//        htmlReporter.config().setDocumentTitle("ExtentReports - Created by TestNG Listener");
-//        htmlReporter.config().setReportName("ExtentReports - Created by TestNG Listener");
-//        htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
-//        htmlReporter.config().setTheme(Theme.STANDARD);
-//
-//    }
+    private static void init() {
+        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("./test-output/ExtentReport_"+buildNumber + ".html");
+        htmlReporter.config().setResourceCDN(ResourceCDN.EXTENTREPORTS); //解决报告没有css样式的问题
+        htmlReporter.config().setDocumentTitle("ExtentReports - Created by TestNG Listener");
+        htmlReporter.config().setReportName("ExtentReports - Created by TestNG Listener");
+        htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
+        htmlReporter.config().setTheme(Theme.STANDARD);
+
+    }
 
 
 
